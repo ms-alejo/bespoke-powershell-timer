@@ -10,7 +10,7 @@ function Countdown-Timer {
   }
 
   $supportedExtensions = @(".wav")
-  $fileExtension = [System.IO.Path]::GetExtgension($AlarmSound).ToLower()
+  $fileExtension = [System.IO.Path]::GetExtension($AlarmSound).ToLower()
   if ($fileExtension -notin $supportedExtensions) {
     Write-Error "Unsupported file format. Please provide a file with the following extension: $($supportedExtensions)"
     return
@@ -26,7 +26,7 @@ function Countdown-Timer {
     Start-Sleep -Seconds 1
   }
 
-  Write-Host "Time's up!"
+  Write-Host "`nTime's up!"
   [System.Media.SoundPlayer]$player = New-Object System.Media.SoundPlayer
   $player.SoundLocation = $AlarmSound
   $player.PlaySync()
