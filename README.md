@@ -32,7 +32,7 @@ option 2: Countdown-Timer -Minutes <duration-in-minutes> -Seconds <duration-in-s
 option 3: Countdown-Timer -Hours <duration-in-hours> -Minutes <duration-in-minutes> -Seconds <duration-in-seconds> -AlarmSound "<path-to-alarm-sound.wav"
 ```
 
-#### 2.1 Modify the Script
+#### 2.1 Modify the Script with default values
 
 change:
 ```powershell
