@@ -35,7 +35,7 @@ param(
       Start-Sleep -Seconds 1
     }
   } catch {
-    Write-Warning "Countdown interrupted by user."
+    Write-Warning "Countdown stopped by user."
     return
   }
 
@@ -45,7 +45,7 @@ param(
   try {
     [System.Media.SoundPlayer]$player = New-Object System.Media.SoundPlayer
     $player.SoundLocation = $AlarmSound
-    Write-Host "Playing alarm. Press Ctrl+C to stop."
+    Write-Host "Playing alarm. Press Ctrl+C to stop the alarm. `n`n*Note: the alarm will stop once the sound file has finished playing." 
 
     while ($true) {
       $player.PlaySync()
