@@ -1,8 +1,17 @@
 function Countdown-Timer {
 param(
+    [int]$Hours = 0,
+    [int]$Minutes = 0,
     [int]$Seconds = 60,
     [string]$AlarmSound = "./alarm-sounds/lamp_3.wav"
   )
+
+  # calculate time in seconds
+  $totalSeconds = ($Hours * 3600) + ($Minutes * 60) + $Seconds;
+  if ($totalSeconds -le 0) {
+    Write-Error = "Please enter duration greater than zero."
+    return
+  }
 
   # check if the alarm sound file exists
   if (!(Test-Path -Path $AlarmSound)) {
@@ -10,7 +19,7 @@ param(
     return
   }
 
-  # check for corret file type
+  # check for correct file type
   $supportedExtensions = @(".wav")
   $fileExtension = [System.IO.Path]::GetExtension($AlarmSound).ToLower()
   if ($fileExtension -notin $supportedExtensions) {
@@ -20,18 +29,19 @@ param(
 
   # calculate time
   $startTime = [DateTime]::Now
-  $endTime = $startTime.AddSeconds($Seconds)
+  $endTime = $startTime.AddSeconds($totalSeconds)
 
   # countdown timer and progress bar
   Write-Host "Countdown Timer Started:"
 
   try {
-    for($i = 0; $i -lt $Seconds; $i++) {
-      $remainingTime = $endTime - [DateTime]::Now
-      $secondsLeft = [int]$remainingTime.TotalSeconds
-      $progress = [math]::Round(($i + 1) / $Seconds * 100)
-      Write-Progress -Activity "Counting Down" -Status "$secondsLeft seconds left" -PercentComplete $progress
+    for ($elapsed = 0; $elapsed -lt $totalSeconds; $elapsed++) {
+      $remainingSeconds = $totalSeconds - $elapsed
+      $remainingTime = [TimeSpan]::FromSeconds($remainingSeconds)
+      $formattedTime = "{0:D2}:{1:D2}:{2:D2}" -f $remainingTime.Hours, $remainingTime.Minutes, $remainingTime.Seconds
+      $progress = [math]::Round(($elapsed / $totalSeconds) * 100)
 
+      Write-Progress -Activity "Counting Down:" -Status "$formattedTime remaining" -PercentComplete $progress
       Start-Sleep -Seconds 1
     }
   } catch {
