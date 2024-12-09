@@ -27,7 +27,27 @@ first run:
 
 then run:
 
-Countdown-Timer -Seconds <duration-in-seconds> -AlarmSound "<path-to-alarm-sound.wav>"
+option 1: Countdown-Timer -Seconds <duration-in-seconds> -AlarmSound "<path-to-alarm-sound.wav>"
+option 2: Countdown-Timer -Minutes <duration-in-minutes> -Seconds <duration-in-seconds> -AlarmSound "<path-to-alarm-sound.wav>"
+option 3: Countdown-Timer -Hours <duration-in-hours> -Minutes <duration-in-minutes> -Seconds <duration-in-seconds> -AlarmSound "<path-to-alarm-sound.wav"
+```
+
+#### 2.1 Modify the Script
+
+change:
+```powershell
+param (
+    [int]$Hours = {desired-default-amount-in-hours},
+    [int]$Minutes = {desired-default-amount-in-minutes},
+    [int]$Seconds = {desired-default-amount-in-seconds},
+    [string]$AlarmSound = "{path-to-alarm-sound.wav}"
+)
+```
+run:
+```powershell
+. .\countdown.ps1
+
+Countdown-Timer
 ```
 
 ### 3. Stop the Script
