@@ -35,11 +35,15 @@ param(
   Write-Host "Countdown Timer Started:"
 
   try {
-    for ($elapsed = 0; $elapsed -lt $totalSeconds; $elapsed++) {
+    for ($elapsed = 0; $elapsed -le $totalSeconds; $elapsed++) {
       $remainingSeconds = $totalSeconds - $elapsed
       $remainingTime = [TimeSpan]::FromSeconds($remainingSeconds)
       $formattedTime = "{0:D2}:{1:D2}:{2:D2}" -f $remainingTime.Hours, $remainingTime.Minutes, $remainingTime.Seconds
       $progress = [math]::Round(($elapsed / $totalSeconds) * 100)
+
+      if ($elapsed -eq $totalSeconds) {
+        $progress = 100
+      }
 
       Write-Progress -Activity "Counting Down:" -Status "$formattedTime remaining" -PercentComplete $progress
       Start-Sleep -Seconds 1
